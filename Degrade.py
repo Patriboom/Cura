@@ -1,5 +1,5 @@
 # Par Patrick ALLAIRE
-# Version 1.0
+# Version 1.1
 
 from ..Script import Script
 import re
@@ -102,7 +102,7 @@ class Degrade(Script):
         coulFinA = self.getSettingValueByKey("fina")
         coulFinB = self.getSettingValueByKey("finb")
         coulFinC = self.getSettingValueByKey("finc")
-        if (coulFinC + coulFinC + coulFinC) < 100:
+        if (coulFinC + coulFinC + coulFinC) > 100:
             coulFinC = 100 - coulFinA - coulFinB
         compte = 0
         nombre = zFin - zDebut
@@ -114,38 +114,45 @@ class Degrade(Script):
                 cherche = ";LAYER:"
                 remplace = cherche + str(rendu) + "\n"
                 # Première valeur
-                val = coulInitA
+                val = (coulFinA - coulInitA) * (compte/nombre)
+                val = round(val)
                 if val == 100:
                     sval = "1.00"
                 else:
-                    val += (coulFinA - coulInitA) * (compte/nombre)
-                    val = round(val)
                     cumul += val
-                    sval = "0." + str(val) + "00"
+                    sval = str(val)
+                    if val < 10:
+                        sval = "0" + str(val)
+                    sval = "0." + sval + "00"
                     sval = sval[0:4]
                 remplace += "M163 S0 P" + sval + "\n"
                 # Deuxième valeur
-                val = coulInitB
+                val = (coulFinB - coulInitB) * (compte/nombre)
+                val = round(val)
                 if val == 100:
                     sval = "1.00"
                 else:
-                    val += (coulFinB - coulInitB) * (compte/nombre)
-                    val = round(val)
                     cumul += val
-                    sval = "0." + str(val) + "00"
+                    sval = str(val)
+                    if val < 10:
+                        sval = "0" + str(val)
+                    sval = "0." + sval + "00"
                     sval = sval[0:4]
                 remplace += "M163 S1 P" + sval + "\n"
                 # Troisième valeur
-                val = coulInitC
-                if val == 100:
+                val = (coulFinC - coulInitC) * (compte/nombre)
+                val = round(val)
+                if val == 100 or cumul == 0:
                     sval = "1.00"
                 else:
-                    val += (coulFinC - coulInitC) * (compte/nombre)
-                    val = round(val)
                     cumul += val
                     while cumul < 100:
                         val += 1
-                    sval = "0." + str(val) + "00"
+                        cumul += 1
+                    sval = str(val)
+                    if val < 10:
+                        sval = "0" + str(val)
+                    sval = "0." + sval + "00"
                     sval = sval[0:4]
                 remplace += "M163 S2 P" + sval + "\n;"
 
