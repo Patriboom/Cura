@@ -1,5 +1,5 @@
 # Par Patrick ALLAIRE
-# Version 1.1
+# Version 1.1  ---   2023/06/14
 
 from ..Script import Script
 import re
