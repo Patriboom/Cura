@@ -89,6 +89,26 @@ class Degrade(Script):
             }
         }"""
         
+    def pourcentage(self, valeur, cumulons, coul):
+        if valeur == 100:
+            v = "1.00"
+        elif cumulons == 0 and coul == "C":
+            v = "1.00"
+            cumulons = 100
+        else:
+            cumulons += valeur
+            if coul == "C":
+                while cumulons < 100:
+                    valeur += 1
+                    cumulons += 1
+            v = str(valeur)
+            if valeur < 10:
+                v = "0" + v
+            v = "0." + v + "00"
+            v = v[0:4]
+                
+        return str(v), cumulons
+       
     def execute(self, data):
         zDebut = self.getSettingValueByKey("debut")
         zFin = int(self.getSettingValueByKey("fin"))
@@ -107,8 +127,8 @@ class Degrade(Script):
         compte = 0
         nombre = zFin - zDebut
 
-        for layer_number, layer in enumerate(data):
-            rendu = layer_number - 2
+        for index, layer in enumerate(data):
+            rendu = index - 2
             if rendu >= zDebut and rendu <= zFin:
                 cumul = 0
                 cherche = ";LAYER:"
@@ -116,47 +136,20 @@ class Degrade(Script):
                 # Première valeur
                 val = (coulFinA - coulInitA) * (compte/nombre)
                 val = round(val)
-                if val == 100:
-                    sval = "1.00"
-                else:
-                    cumul += val
-                    sval = str(val)
-                    if val < 10:
-                        sval = "0" + str(val)
-                    sval = "0." + sval + "00"
-                    sval = sval[0:4]
+                sval, cumul = pourcentage(val, cumul, "A")
                 remplace += "M163 S0 P" + sval + "\n"
                 # Deuxième valeur
                 val = (coulFinB - coulInitB) * (compte/nombre)
                 val = round(val)
-                if val == 100:
-                    sval = "1.00"
-                else:
-                    cumul += val
-                    sval = str(val)
-                    if val < 10:
-                        sval = "0" + str(val)
-                    sval = "0." + sval + "00"
-                    sval = sval[0:4]
+                sval, cumul = pourcentage(val, cumul, "B")
                 remplace += "M163 S1 P" + sval + "\n"
                 # Troisième valeur
                 val = (coulFinC - coulInitC) * (compte/nombre)
                 val = round(val)
-                if val == 100 or cumul == 0:
-                    sval = "1.00"
-                else:
-                    cumul += val
-                    while cumul < 100:
-                        val += 1
-                        cumul += 1
-                    sval = str(val)
-                    if val < 10:
-                        sval = "0" + str(val)
-                    sval = "0." + sval + "00"
-                    sval = sval[0:4]
+                sval, cumul = pourcentage(val, cumul, "C")
                 remplace += "M163 S2 P" + sval + "\n;"
 
-                data[layer_number] = re.sub(cherche, remplace, layer)
+                data[index] = re.sub(cherche, remplace, layer)
                 compte += 1
 
         return data
