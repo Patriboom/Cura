@@ -10,9 +10,14 @@ Variables:
 - Couche finale
 
 Exemple de code généré:
+
 M163 S0 P0.00
+
 M163 S1 P1.00
+
 M163 S2 P0.00
+
+
 
 
 # PauseEveryDelay
@@ -26,19 +31,36 @@ Variables:
 - Message affiché sur l'écran LCD durant les pauses
 
 Exemple de code généré:
+
 ;Pause demandée par PauseEveryDelay
+
 G60
+
 G90
+
 ;;Positionnement de la tête au lieu demandé
+
 G0 E0 F20 X0 Y0 Z0
+
 G92 E-1 F20  X0 Y0 Z0
+
 ;;Alerte sonore et mise en pause de la machine
+
 M300 P5 S261
+
 M300 P5 S329
+
 M300 P5 S415
+
 M300 P15 S523
+
 M76
+
 M25
+
 G92 Z4
+
 ;FIN DE ----Pause demandée par PauseEveryDelay ----G4 S55
+
+
 
