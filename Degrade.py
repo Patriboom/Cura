@@ -103,8 +103,8 @@ class Degrade(Script):
                     cumulons += 1
             v = str(valeur)
             if valeur < 10:
-                v = "0" + v
-            v = "0." + v + "00"
+                v = "0" + v + "0"
+            v = "0." + v + "000"
             v = v[0:4]
                 
         return str(v), cumulons
