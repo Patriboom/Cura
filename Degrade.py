@@ -136,17 +136,17 @@ class Degrade(Script):
                 # Première valeur
                 val = (coulFinA - coulInitA) * (compte/nombre)
                 val = round(val)
-                sval, cumul = pourcentage(val, cumul, "A")
+                sval, cumul = self.pourcentage(val, cumul, "A")
                 remplace += "M163 S0 P" + sval + "\n"
                 # Deuxième valeur
                 val = (coulFinB - coulInitB) * (compte/nombre)
                 val = round(val)
-                sval, cumul = pourcentage(val, cumul, "B")
+                sval, cumul = self.pourcentage(val, cumul, "B")
                 remplace += "M163 S1 P" + sval + "\n"
                 # Troisième valeur
                 val = (coulFinC - coulInitC) * (compte/nombre)
                 val = round(val)
-                sval, cumul = pourcentage(val, cumul, "C")
+                sval, cumul = self.pourcentage(val, cumul, "C")
                 remplace += "M163 S2 P" + sval + "\n;"
 
                 data[index] = re.sub(cherche, remplace, layer)
