@@ -1,3 +1,17 @@
+# Installation
+Avec le logiciel CURA, veuillez installer vos scripts dans le répertoire suivant:
+
+### Linux / Mac
+~/.config/cura/version/scripts
+
+exemple: ~/.config/cura/4.2/scripts
+ou       /home/usager/.config/cura/4.2/scripts
+
+###Windows
+c:\Documents and Settings\Application Data\cura\version\scripts
+
+
+
 Voici une brève description des scripts disponibles
 
 # Degrade
