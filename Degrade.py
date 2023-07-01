@@ -9,6 +9,7 @@ class Degrade(Script):
         super().__init__()
 
     def getSettingDataString(self):
+        # import Degrade_FR
         return """{
             "name":"Dégradé de couleurs",
             "key": "Degrade",
@@ -90,24 +91,23 @@ class Degrade(Script):
         }"""
         
     def pourcentage(self, valeur, cumulons, coul):
-        if valeur == 100:
-            v = "1.00"
-        elif cumulons == 0 and coul == "C":
-            v = "1.00"
-            cumulons = 100
-        else:
-            cumulons += valeur
-            if coul == "C":
-                while cumulons < 100:
-                    valeur += 1
-                    cumulons += 1
-            v = str(valeur)
-            if valeur < 10:
-                v = "0" + v + "0"
-            v = "0." + v + "000"
-            v = v[0:4]
-                
-        return str(v), cumulons
+        valeur = abs(round(valeur))
+        if cumulons == 0 and coul == "C":
+            return "1.00", 100
+        cumulons += valeur
+        if coul == "C":
+            while cumulons < 100:
+                valeur += 1
+                cumulons += 1
+            while cumulons > 100:
+                valeur -= 1
+                cumulons -= 1
+        v = str(valeur)
+        if valeur < 10:
+            return "0.0" + v[0:1], cumulons
+        if valeur > 99:
+            return "1.00", 100
+        return "0." + v[0:2], cumulons
        
     def execute(self, data):
         zDebut = self.getSettingValueByKey("debut")
@@ -135,17 +135,14 @@ class Degrade(Script):
                 remplace = cherche + str(rendu) + "\n"
                 # Première valeur
                 val = (coulFinA - coulInitA) * (compte/nombre)
-                val = round(val)
                 sval, cumul = self.pourcentage(val, cumul, "A")
                 remplace += "M163 S0 P" + sval + "\n"
                 # Deuxième valeur
                 val = (coulFinB - coulInitB) * (compte/nombre)
-                val = round(val)
                 sval, cumul = self.pourcentage(val, cumul, "B")
                 remplace += "M163 S1 P" + sval + "\n"
                 # Troisième valeur
                 val = (coulFinC - coulInitC) * (compte/nombre)
-                val = round(val)
                 sval, cumul = self.pourcentage(val, cumul, "C")
                 remplace += "M163 S2 P" + sval + "\n;"
 
