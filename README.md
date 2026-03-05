@@ -61,5 +61,31 @@ G92 Z4
 ;FIN DE ----Pause demandée par PauseEveryDelay ----G4 S55
 ```
 
+#FauxRadeau
+Ralentir l'impression des premières couches afin d'en améliorer l'adhérence au plateau.  Ce script reproduit quelques fonctionnalités du « radeau » sans utiliser une aussi grande quantité de filament.
 
+### Variables :
+- Début : couche initiale de ralentissement (valeur suggérée = 0 )
+- Fin : couche à laquelle reprend la vitesse normale d'impression
+- Vitesse : pourcentage de la vitesse normale appliquée aux couches ralenties
+
+### Exemple de code généré
+```
+```
+
+#ReduireTempPlateau
+Les pièces à grande surface ont souvent tendance à se tordre dans les coins, là où la température descend plus rapidement.  Afin d'éviter ces torsions, la tempéraure du plateau peut être abaissée.
+
+L'impression n'est pas interrompue si la température demandée est plus basse que la température en cours.  La température visée pourra demander plusieurs couches avant d'être atteinte.
+
+### Variables: 
+- Début : couche à partir de laquelle la température du plateau sera abaissée
+- Température: température visée pour le plateau
+
+### Exemple de code généré
+```
+;LAYER:3
+M140 S35  ;Nouvelle température de plateau visée --- script ReduireTempPlateau.
+
+```
 
