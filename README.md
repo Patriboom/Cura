@@ -61,7 +61,7 @@ G92 Z4
 ;FIN DE ----Pause demandée par PauseEveryDelay ----G4 S55
 ```
 
-#FauxRadeau
+# FauxRadeau
 Ralentir l'impression des premières couches afin d'en améliorer l'adhérence au plateau.  Ce script reproduit quelques fonctionnalités du « radeau » sans utiliser une aussi grande quantité de filament.
 
 ### Variables :
@@ -73,7 +73,7 @@ Ralentir l'impression des premières couches afin d'en améliorer l'adhérence a
 ```
 ```
 
-#ReduireTempPlateau
+# ReduireTempPlateau
 Les pièces à grande surface ont souvent tendance à se tordre dans les coins, là où la température descend plus rapidement.  Afin d'éviter ces torsions, la tempéraure du plateau peut être abaissée.
 
 L'impression n'est pas interrompue si la température demandée est plus basse que la température en cours.  La température visée pourra demander plusieurs couches avant d'être atteinte.
