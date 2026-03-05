@@ -71,6 +71,12 @@ Ralentir l'impression des premières couches afin d'en améliorer l'adhérence a
 
 ### Exemple de code généré
 ```
+;LAYER:0
+M220 S50  ;Vitesse ralentie à 50% de la vitesse normale --- script FauxRadeau.
+[...]
+;LAYER:2
+M220 S100 ;Retour à la vitesse normale --- script FauxRadeau.
+
 ```
 
 # ReduireTempPlateau
